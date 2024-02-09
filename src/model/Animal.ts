@@ -1,9 +1,25 @@
 export class Animal {
+    /**
+     * Representa o nome do animal.
+     */
     private nome: string;
+    /**
+     * Representa a idade do animal.
+     */
     private idade: number;
+    /**
+     * Representa o gênero do animal.
+     */
     private genero: string;
 
-    constructor(_nome: string, _idade: number, _genero: string){
+    /**
+    * Construtor da classe Animal.
+    * 
+    * @param _nome O nome do animal.
+    * @param _idade A idade do animal.
+    * @param _genero O gênero do animal.
+    */
+    constructor(_nome: string, _idade: number, _genero: string) {
         this.nome = _nome;
         this.idade = _idade;
         this.genero = _genero;
@@ -32,7 +48,7 @@ export class Animal {
      * 
      * @returns idade : idade do animal
      */
-    public getIdade(): number{
+    public getIdade(): number {
         return this.idade;
     }
 
@@ -41,7 +57,7 @@ export class Animal {
      * 
      * @param _idade : idade do animal
      */
-    public setIdade(_idade: number):void {
+    public setIdade(_idade: number): void {
         this.idade = _idade;
     }
 
