@@ -1,5 +1,9 @@
 import { Animal } from "./Animal";
 
+/**
+ * Representa um mamífero, um tipo de animal de sangue quente que geralmente dá à luz a filhotes vivos
+ * e alimenta seus filhotes com leite produzido por glândulas mamárias.
+ */
 export class Mamifero extends Animal{
     /**
      * Representa a raça do mamífero.

@@ -1,5 +1,8 @@
 import { Atracao } from "./Atracao";
 
+/**
+ * Classe representando um zoológico, local destinado à exposição, pesquisa e conservação de animais.
+ */
 export class Zoologico {
     /**
      * Representa o nome do zoológico.

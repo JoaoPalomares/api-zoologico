@@ -1,5 +1,8 @@
 import { Animal } from "./Animal";
 
+/**
+ * Representa uma ave, um tipo de animal vertebrado que possui penas, asas e põe ovos.
+ */
 export class Ave extends Animal{
     /**
      * Representa a envergadura da ave.

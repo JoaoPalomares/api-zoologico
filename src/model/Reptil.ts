@@ -1,5 +1,9 @@
 import { Animal } from "./Animal";
 
+/**
+ * Classe representando um réptil, um tipo de animal de sangue frio que geralmente possui escamas, põe ovos
+ * e respira através de pulmões.
+ */
 export class Reptil extends Animal{
     /**
      * Representa o tipo de escamas do réptil.

@@ -1,3 +1,6 @@
+/**
+ * Representa um animal no zoológico, podendo ser um mamífero, ave, réptil ou de outra classe relacionada.
+ */
 export class Animal {
     /**
      * Representa o nome do animal.

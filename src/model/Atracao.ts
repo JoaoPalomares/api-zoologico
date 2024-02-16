@@ -1,5 +1,8 @@
 import { Habitat } from "./Habitat";
 
+/**
+ * Classe representando uma atração em um zoológico, como um show de animais, alimentação interativa ou área de recreação.
+ */
 export class Atracao {
     /**
      * Representa o nome da atração.

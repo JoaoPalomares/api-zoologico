@@ -1,5 +1,8 @@
 import { Animal } from "./Animal";
 
+/**
+ * Representa um habitat no zoológico, onde os animais vivem. 
+ */
 export class Habitat {
     /**
      * Representa o nome do habitat.
