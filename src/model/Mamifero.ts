@@ -1,83 +1,113 @@
 import { Animal } from "./Animal";
 import { DatabaseModel } from "./DatabaseModel";
 
+/**
+ * Pool de conexão do banco de dados
+ */
 const database = new DatabaseModel().pool;
 
 /**
- * Representa um mamífero, um tipo de animal de sangue quente que geralmente dá à luz a filhotes vivos
- * e alimenta seus filhotes com leite produzido por glândulas mamárias.
+ * Representa um mamífero no zoológico, uma subclasse de Animal.
  */
-export class Mamifero extends Animal{
+export class Mamifero extends Animal {
+    
     /**
-     * Representa a raça do mamífero.
+     * A raça do mamífero.
      */
-    private raca: string;
+    private especie: string;
 
     /**
-     * Construtor da classe Mamifero.
+     * Cria uma nova instância de Mamifero.
      * 
-     * @param _raca A raça do mamífero.
+     * @param _especie A raça do mamífero.
      * @param _nome O nome do mamífero.
      * @param _idade A idade do mamífero.
      * @param _genero O gênero do mamífero.
      */
-    constructor(_nome: string, _idade: number, _genero: string, _raca: string,){
-        // Chama o construtor da superclasse (classe pai), que é a classe da qual Mamifero herda propriedades e métodos.
+    constructor(_especie: string,
+                _nome: string,
+                _idade: number,
+                _genero: string) {
+        // Chamada ao construtor da classe pai (Animal) para definir nome, idade e gênero
         super(_nome, _idade, _genero);
-        // Atribui a raça fornecida ao atributo 'raca' específico da classe Mamifero.
-        this.raca = _raca;
+        this.especie = _especie;
     }
 
     /**
-     * Retorna a raça do animal
+     * Obtém a raça do mamífero.
      * 
-     * @returns raça : raça do animal
+     * @returns A raça do mamífero.
      */
-    public getRaca(): string {
-        return this.raca;
+    public getEspecie(): string {
+        return this.especie;
     }
 
     /**
-     * Atribui o parâmetro ao atributo raça
+     * Define a raça do mamífero.
      * 
-     * @param _raca : raça do animal
+     * @param raca A raça a ser atribuída ao mamífero.
      */
-    public setRaca(_raca: string): void {
-        this.raca = _raca;
+    public setEspecie(raca: string): void {
+        this.especie = raca;
     }
 
+    /**
+     * Retorna uma lista com todos os mamíferos cadastrados no banco de dados
+     * 
+     * @returns Lista com todos os mamíferos cadastrados no banco de dados
+     */
     static async listarMamiferos() {
+        // Cria uma lista (array) vazia do tipo Mamifero
         const listaDeMamiferos: Array<Mamifero> = [];
         try {
-            const queryReturn = await database.query(`SELECT * FROM  mamifero`);
+            // Faz a consulta no banco de dados e retorna o resultado para a variável queryReturn
+            const queryReturn = await database.query(`SELECT * FROM mamifero`);
+            // Percorre todas as linhas da queryReturn e acessa cada objeto individualmente
             queryReturn.rows.forEach(mamifero => {
+                // Coloca o objeto dentro da lista de mamiferos
                 listaDeMamiferos.push(mamifero);
             });
 
             // só pra testar se a lista veio certa do banco
             console.log(listaDeMamiferos);
 
+            // retorna a lista de mamiferos para quem chamou a função
             return listaDeMamiferos;
         } catch (error) {
+            // Caso dê algum erro na query do banco, é lançado o erro para quem chamou a função
             console.log('Erro no modelo');
             console.log(error);
             return "error";
         }
     }
 
+    /**
+     * Cadastra um objeto do tipo Mamifero no banco de dados
+     * 
+     * @param mamifero Objeto do tipo Mamifero
+     * @returns **true** caso sucesso, **false** caso erro
+     */
     static async cadastrarMamifero(mamifero: Mamifero): Promise<any> {
         try {
+            // Cria uma variável do tipo booleano para guardar o status do resultado da query
             let insertResult = false;
+            // Faz a query de insert no banco de dados, passando para o banco as informações do objeto recebibo como parâmetro pela função
             await database.query(`INSERT INTO mamifero (nome, idade, genero, raca)
                 VALUES
-                ('${mamifero.getNome().toUpperCase()}', ${mamifero.getIdade()}, '${mamifero.getGenero().toUpperCase()}', '${mamifero.getRaca().toUpperCase()}');
-            `).then((result) => {
+                ('${mamifero.getNome().toUpperCase()}', ${mamifero.getIdade()}, '${mamifero.getGenero().toUpperCase()}', '${mamifero.getEspecie().toUpperCase()}');
+            `)
+            // Testa para ter certeza que foi possível inserir os dados no banco
+            .then((result) => {
+                // Verifica se o número de linhas adicionadas no banco foi maior que zero
                 if(result.rowCount != 0) {
+                    // Se o número de linhas for maior que zero, a operação deu certo e o valor VERDADEIRO é atribuido na variável
                     insertResult = true;
                 }
             });
+            // Retorna VERDADEIRO para quem chamou a função, indicando que a operação foi realizada com sucesso
             return insertResult;
         } catch(error) {
+            // Caso a inserção no banco der algum erro, é restorno o valor FALSO para quem chamou a função
             return error;
         }
     }

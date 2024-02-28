@@ -1,62 +1,64 @@
 import { Animal } from "./Animal";
 
 /**
- * Representa um habitat no zoológico, onde os animais vivem. 
+ * Representa um habitat no zoológico, onde os animais vivem.
  */
 export class Habitat {
-    /**
-     * Representa o nome do habitat.
-     */
-    private nome: string;
-    /**
-     * Representa a lista de animais presentes no habitat.
-     */
-    private lista_de_animais: Array<Animal>;
 
     /**
-     * Construtor da classe Habitat.
+     * O nome do habitat.
+     */
+    private nome: string;
+
+    /**
+     * A lista de animais que habitam este habitat.
+     */
+    private listaAnimais: Array<Animal>;
+
+    /**
+     * Cria uma nova instância de Habitat.
      * 
      * @param _nome O nome do habitat.
-     * @param _lista_de_animais A lista de animais presentes no habitat.
+     * @param _listaAnimais A lista de animais que habitam o habitat.
      */
-    constructor(_nome: string, _lista_de_animais: Array<Animal>) {
+    constructor(_nome: string, _listaAnimais: Array<Animal>) {
         this.nome = _nome;
-        this.lista_de_animais = _lista_de_animais;
+        this.listaAnimais = _listaAnimais;
     }
 
     /**
-     * Retorna o nome do habitat
+     * Obtém o nome do habitat.
      * 
-     * @returns nome : nome do habitat
+     * @returns O nome do habitat.
      */
     public getNome(): string {
         return this.nome;
     }
 
     /**
-     * Atribui o parâmetro ao atributo habitat
+     * Define o nome do habitat.
      * 
-     * @param _nome : nome do habitat
+     * @param _nome O nome a ser atribuído ao habitat.
      */
     public setNome(_nome: string): void {
         this.nome = _nome;
     }
 
     /**
-     * Retorna a lista de animais
+     * Obtém a lista de animais do habitat.
      * 
-     * @returns lista_de_animais : lista de animais
+     * @returns A lista de animais do habitat.
      */
-    public getListaDeAnimais(): Array<Animal> {
-        return this.lista_de_animais;
+    public getListaAnimais(): Array<Animal> {
+        return this.listaAnimais;
     }
 
     /**
-     * Atribui o parâmetro ao atributo nome
+     * Define a lista de animais do habitat.
      * 
-     * @param _lista_de_animais : lista de animais
+     * @param _listaAnimais A lista de animais a ser atribuída ao habitat.
      */
-    public setListaDeAnimais(_lista_de_animais: Array<Animal>): void {
-        this.lista_de_animais = _lista_de_animais;
+    public setListaAnimais(_listaAnimais: Array<Animal>): void {
+        this.listaAnimais = _listaAnimais;
     }
 }

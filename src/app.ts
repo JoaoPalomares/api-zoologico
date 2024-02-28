@@ -1,24 +1,20 @@
-import express from 'express';
-import cors from 'cors';
-import { Habitat } from './model/Habitat';
-import { Ave } from './model/Ave';
-import { Reptil } from './model/Reptil';
-import { Atracao } from './model/Atracao';
-import { Zoologico } from './model/Zoologico';
-import { DatabaseModel } from './model/DatabaseModel';
-import { Mamifero } from './model/Mamifero';
-
-const port = 3000;
+import express from "express";
+import cors from "cors";
+import { Habitat } from "./model/Habitat";
+import { Atracao } from "./model/Atracao";
+import { DatabaseModel } from "./model/DatabaseModel";
+import { Reptil } from "./model/Reptil";
+import { Mamifero } from "./model/Mamifero";
+import { Ave } from "./model/Ave";
 
 const server = express();
+const port: number = 3000;
 
 server.use(express.json());
 server.use(cors());
 
 server.get('/', (req, res) => {
-    let ave: Ave = new Ave("Maria",2.5, "Fêmea" ,1);
-    let habitat: Habitat = new Habitat("Selva", [ave]);
-    res.json(["A ave é: ", ave, "O habitat é: ", habitat]);
+    res.json("ola");
 });
 
 server.post('/habitat', (req, res) => {
@@ -35,14 +31,7 @@ server.post('/atracao', (req, res) => {
     res.status(200).json('Atração criada');
 });
 
-server.post('/zoologico', (req, res) => {
-    const { nome, atracao } = req.body;
-    const zoo = new Zoologico(nome, atracao);
-    console.log(zoo);
-    res.status(200).json('Zoológico criado');
-});
-
-server.get('/reptil', async (req, res) => {
+server.get('/list/reptil', async (req, res) => {
     const repteis = await Reptil.listarRepteis();
 
     res.status(200).json(repteis);
@@ -60,54 +49,55 @@ server.post('/new/reptil', async (req, res) => {
     } else {
         return res.status(400).json('Não foi possível cadastrar o réptil no banco de dados');
     }
+    
 })
 
-server.get('/mamifero', async (req, res) => {
-    const mamiferos = await Mamifero.listarMamiferos();
+server.get('/list/mamifero', async (req, res) => {
+    const mamifero = await Mamifero.listarMamiferos();
 
-    res.status(200).json(mamiferos);
+    res.status(200).json(mamifero);
 })
 
 server.post('/new/mamifero', async (req, res) => {
     const { nome, idade, genero, raca } = req.body;
 
-    const novoMamifero = new Mamifero(nome, idade, genero, raca);
+    const novoMamifero = new Mamifero(raca, nome, idade, genero);
 
     const result = await Mamifero.cadastrarMamifero(novoMamifero);
 
     if(result) {
-        return res.status(200).json('Mamífero cadastrado com sucesso');
+        return res.status(200).json('Mamifero cadastrado com sucesso');
     } else {
-        return res.status(400).json('Não foi possível cadastrar o mamífero no banco de dados');
+        return res.status(400).json('Não foi possível cadastrar o mamifero no banco de dados');
     }
 })
 
-server.get('/ave', async (req, res) => {
-    const aves = await Ave.listarAves();
+server.get('/list/ave', async (req, res) => {
+    const ave = await Ave.listarAves();
 
-    res.status(200).json(aves);
+    res.status(200).json(ave);
 })
 
 server.post('/new/ave', async (req, res) => {
     const { nome, idade, genero, envergadura } = req.body;
 
-    const novoAve = new Ave(nome, idade, genero, envergadura);
+    const novaAve = new Ave(nome, idade, genero, envergadura);
 
-    const result = await Ave.cadastrarAve(novoAve);
+    const result = await Ave.cadastrarAve(novaAve);
 
     if(result) {
-        return res.status(200).json('Ave cadastrada com sucesso');
+        return res.status(200).json('Ave cadastrado com sucesso');
     } else {
-        return res.status(400).json('Não foi possível cadastrar a ave no banco de dados');
+        return res.status(400).json('Não foi possível cadastrar o ave no banco de dados');
     }
 })
 
-new DatabaseModel().testeConexao().then((resbd) =>{
-    if(resbd){
+new DatabaseModel().testeConexao().then((resbd) => {
+    if(resbd) {
         server.listen(port, () => {
-            console.log(`Servidor está escutando no endereço http://localhost:${port}`);
-        });
+            console.log(`Servidor rodando em http://localhost:${port}`);
+        })
     } else {
         console.log('Não foi possível conectar ao banco de dados');
     }
-});
+})
