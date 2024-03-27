@@ -6,7 +6,7 @@ import { Mamifero } from "./model/Mamifero";
 import { Ave } from "./model/Ave";
 
 const server = express();
-const port: number = 3000;
+const port: number = 5432;
 
 server.use(express.json());
 server.use(cors());
